@@ -154,41 +154,6 @@ ${this.whereCanPlay().map( P => `  * ${P}`).join("\n")}
     }));
 
     return L;
-
-    /*
-    // OU
-    const L: TileCoords[] = [];
-    for (let i = 0; i < this.board.length; i++) {
-      for (let j = 0; j < this.board[i].length; j++) {
-        if (this.PionsTakenIfPlayAt(i, j).length > 0) {
-          L.push( [i, j] );
-        }
-      }
-    }
-    // OU
-    const L: TileCoords[] = [];
-    this.board.forEach( (line, i) => line.forEach( (c, j) => {
-      if (this.PionsTakenIfPlayAt(i, j).length > 0) {
-        L.push( [i, j] );
-      }
-    }));
-
-    // OU
-    return this.board.reduce(
-      (L, line, i) => [ ...L
-                      , ...line.reduce( (acc, _c, j) => this.PionsTakenIfPlayAt(i, j).length > 0 ? [...acc, [i, j] as TileCoords] : acc
-                                      , [] as TileCoords[])],
-       [] as TileCoords[]
-    );
-
-    // OU
-    return this.board.reduce(
-      (acc, line, i) => [...acc, ...line.map( (_c, j) => [i, j] as TileCoords)],
-       [] as TileCoords[]
-    ).filter(
-      ([i, j]) => this.PionsTakenIfPlayAt(i, j).length > 0
-    )
-    */
   }
 
   /**

@@ -1,0 +1,126 @@
+.brand{
+    position: absolute;
+    margin: 20px;
+    width: 20%;
+    font-family: Inter;
+    color: white;
+
+    .logo{
+        width: 60%;
+    }
+}
+table{
+    background-color: #2A735F;
+    border: solid 20px;
+    border-radius: 20px;
+    border-color: #2A735F;
+    height: 90vh;
+    width: 90vh;
+    margin-left: auto;
+    margin-right: auto;
+
+    tr{
+        background-color: black;
+        margin: 5px;
+    }
+
+    td{
+        background-color: white;
+        width: 10%;
+        height: 10%;
+        
+    }
+    .pionEnnemi{
+        width: 80%;
+        height: 80%;
+        border-radius: 50px;
+        margin: 0 auto;
+    }
+    .pionAllie{
+        width: 80%;
+        height: 80%;
+        border-radius: 50px;
+        margin: 0 auto;
+    }
+    .pionPrediction{
+        background-color: lightgray;
+        margin: 10px;
+        opacity: 60%;
+        width: 80%;
+        height: 80%;
+        border-radius: 50px;
+        &:hover{
+            cursor:grab;
+        }
+    }
+    .pawn{
+        width: 100%;
+        height: 100%;
+    
+    }
+}
+
+
+tr:nth-child(even) td:nth-child(even)
+{background-color: white;}
+tr:nth-child(odd) td:nth-child(even)
+{background-color: #183037;}
+
+tr:nth-child(even) td:nth-child(odd)
+{background-color: #183037;}
+
+
+.rules{
+    background-color: #2A735F;
+    border-radius: 20px;
+    width: 400px;
+    position: absolute;
+    margin-left: 10px;
+    margin-top: 100px;
+}
+
+.rules-container{
+    display: block;
+}
+h1{
+    color: white;
+    font-family: Inter, medium;
+    font-size: 20px;
+    margin-left: 20px;
+}
+p{
+    color: white;
+    font-family: Inter, medium;
+    font-size: 16px;
+    margin: 20px;
+}
+
+.score-container{
+    background-color: #2A735F;
+    border-radius: 20px;
+    margin-left: 10px;
+    position: absolute;
+    margin-top: 500px;
+}
+
+
+
+.left-element {
+    display: inline-block;
+    
+    margin-left: 20px;
+}
+
+.right-element {
+    margin-left: 20px;
+    margin-right: 20px;
+    display: inline-block;
+}
+
+.text-score{
+    margin-top: 10px;
+    text-align: center;
+}
+.scorestreak{
+    font-size: 20px;
+}
