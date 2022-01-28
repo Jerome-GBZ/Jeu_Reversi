@@ -18,7 +18,12 @@ export class AppComponent {
   public ennemiScore = 2;
 
   constructor(public RGS: ReversiGameEngineService, private ia: IaService) {
-    this.RGS.gameStateObs
+    // this.RGS.gameStateObs
+
+    RGS.gameStateObs.subscribe( gs => {
+        console.log("Un coup jouer !!!");
+        this.updateScore();
+    });
   }
 
 
