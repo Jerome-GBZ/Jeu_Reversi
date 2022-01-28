@@ -1,36 +1,44 @@
-<div class="brand">
-    <img class="logo" src="../assets/logo.svg">
-</div>
+<div class="container">
+    <div class="col-left">
+        <div class="top-bar">
+            <div class="brand">
+                <img class="logo" src="../assets/logo.svg">
+            </div>
 
-<div class="rules">
-    <div class="rules-container">
-        <h1>Les règles</h1>
-        <p>Othello (aussi connu sous le nom Reversi) est un jeu de société combinatoire abstrait opposant deux joueurs.
+            <div class="score-container">
+                <p class="scorestreak">Score </p>
+                <div class="left-element">
+                    <div class="pionAllie"><img width="80" height="80" class="pawn" src="../assets/white_piece.svg"></div>
+                    <p class="text-score">{{monScore}}</p>
+                </div>
+                <div class="right-element">
+                    <div class="pionAllie"><img width="80" height="80" class="pawn" src="../assets/dark_piece.svg"></div>
+                    <p class="text-score">{{ennemiScore}}</p>
+                </div>
+            </div>
+        </div>
 
-            Il se joue sur un tablier unicolore de 64 cases, 8 sur 8, appelé othellier. Les joueurs disposent de 64 pions bicolores, noirs d'un côté et blancs de l'autre. En début de partie, quatre pions sont déjà placés au centre de l'othellier : deux noirs, en e4 et d5, et deux blancs, en d4 et e5. Chaque joueur, noir et blanc, pose l'un après l'autre un pion de sa couleur sur l'othellier selon des règles précises. Le jeu s'arrête quand les deux joueurs ne peuvent plus poser de pion. On compte alors le nombre de pions. Le joueur ayant le plus grand nombre de pions de sa couleur sur l'othellier a gagné.</p>
+        <div class="rules">
+            <div class="rules-container">
+                <h1>Les règles</h1>
+                <p>Othello (aussi connu sous le nom Reversi) est un jeu de société combinatoire abstrait opposant deux joueurs.
+
+                    Il se joue sur un tablier unicolore de 64 cases, 8 sur 8, appelé othellier. Les joueurs disposent de 64 pions bicolores, noirs d'un côté et blancs de l'autre. En début de partie, quatre pions sont déjà placés au centre de l'othellier : deux noirs, en e4 et d5, et deux blancs, en d4 et e5. Chaque joueur, noir et blanc, pose l'un après l'autre un pion de sa couleur sur l'othellier selon des règles précises. Le jeu s'arrête quand les deux joueurs ne peuvent plus poser de pion. On compte alors le nombre de pions. Le joueur ayant le plus grand nombre de pions de sa couleur sur l'othellier a gagné.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-rigth">
+        <h1 class="autourde"> Au tour de : {{ this.RGS.turn }} </h1>
+        <table class="game-table">
+            <tr *ngFor="let row of RGS.board; let i = index">
+                <td *ngFor="let column of RGS.board; let j = index">
+                    <div class="pionAllie" *ngIf="RGS.board[i][j]==me"><img width="100" height="100" class="pawn" src="../assets/white_piece.svg"></div>
+                    <div class="pionEnnemi" *ngIf="RGS.board[i][j]==ennemi"><img width="100" height="100" class="pawn" src="../assets/dark_piece.svg"></div>
+                    <div class="pionPrediction" *ngIf="checkIfIsWherePositionICanPlay(i,j) && this.RGS.turn === me " (click)="onPredictionClick(i,j)"></div>
+                </td>
+            </tr>
+        </table>
     </div>
 </div>
 
-<div class="score-container">
-    <p class="scorestreak">Score: </p>
-    <div class="left-element">
-        <div class="pionAllie"><img width="80" height="80" class="pawn" src="../assets/white_piece.svg"></div>
-        <p class="text-score">{{monScore}}</p>
-    </div>
-    <div class="right-element">
-        <div class="pionAllie"><img width="80" height="80" class="pawn" src="../assets/dark_piece.svg"></div>
-        <p class="text-score">{{ennemiScore}}</p>
-    </div>
-</div>
-
-<table class="game-table">
-    <tr *ngFor="let row of RGS.board; let i = index">
-        <td *ngFor="let column of RGS.board; let j = index">
-            <div class="pionAllie" *ngIf="RGS.board[i][j]==me"><img width="100" height="100" class="pawn" src="../assets/white_piece.svg"></div>
-            <div class="pionEnnemi" *ngIf="RGS.board[i][j]==ennemi"><img width="100" height="100" class="pawn" src="../assets/dark_piece.svg"></div>
-            <div class="pionPrediction" *ngIf="checkIfIsWherePositionICanPlay(i,j) && this.RGS.turn === me " (click)="onPredictionClick(i,j)"></div>
-        </td>
-    </tr>
-</table>
-
-<div> {{ updateScore() }} </div>
