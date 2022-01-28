@@ -1,6 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
 import { BehaviorSubject, Observable, OperatorFunction, share } from 'rxjs';
 import { Board, BoardtoString, Board_RO, C, charToTurn, GameState, getEmptyBoard, PlayImpact, ReversiModelInterface, TileCoords, Turn } from './ReversiDefinitions';
+import { AppComponent } from './app.component';
 
 export function runInZone<T>(zone: NgZone): OperatorFunction<T, T> {
   return (source) => {
@@ -110,6 +111,8 @@ ${this.whereCanPlay().map( P => `  * ${P}`).join("\n")}
     return {turn: 'Player1', board};
   }
 
+
+
   /**
    * Renvoie la liste des positions qui seront prises si on pose un pion du joueur courant en position i,j
    * @param i Indice de la ligne où poser le pion
@@ -117,27 +120,48 @@ ${this.whereCanPlay().map( P => `  * ${P}`).join("\n")}
    * @returns Une liste des positions qui seront prise si le pion est posée en x,y
    */
   PionsTakenIfPlayAt(i: number, j: number): PlayImpact {
-    if (this.board[i]?.[j] !== 'Empty')
-      return [];
+    /*
+        On chercher un pion du joueur adverse tout autour de la position (i,j)
+        Si on en trouve un :
+            - on fait une boucle while qui avance dans le sens de la position (tant que on a un pion joueur adverse)
+            - quand on sort de la boucle on check si le pion = Empty ou Joueur Adverse ou Joueur Courant
+            - Si le pion apres tant que = Joueur Courant alors
+                * on ajoute le pion dans le tableau
+    */
 
-    const adversaire: Turn = this.turn === 'Player1' ? 'Player2' : 'Player1';
-    // Parcourir les 8 directions pour accumuler les coordonnées de pions prenables
-    return [ [1, 0], [1, -1], [1, 1], [0, 1], [0, -1], [-1, 0], [-1, -1], [-1, 1] ].reduce(
-        (L, [dx, dy]) => {
-            let c: C | undefined;
-            let X = i, Y = j;
-            let Ltmp: TileCoords[] = [];
-            do {Ltmp.push( [X += dx, Y += dy] );
-                c = this.board[X]?.[Y];
-            } while(c === adversaire);
-            if (c === this.turn && Ltmp.length > 1) {
-                Ltmp.pop(); // On en a pris un de trop...
-                L.push( ...Ltmp );
-            }
-            return L;
-        },
-        [] as TileCoords[]
-    ); // fin reduce
+      const coordCheck = [[i-1,j+1, -1, +1], [i-1,j, -1, 0], [i-1,j-1, -1, -1], [i,j+1, 0, +1], [i,j-1, 0, -1], [i+1,j+1, +1, +1], [i+1,j, +1, 0], [i+1,j-1, +1, -1]];
+      const adverse:Turn = this.turn === 'Player1' ? 'Player2':'Player1';
+      const player:Turn = this.turn;
+
+      let pionsManger:TileCoords[] = [];
+      let tempTab:TileCoords[] = [];
+
+      if (this.board[i][j] !== 'Empty') {
+          return [];
+      } else {
+          for(let nbPosibilite=0; nbPosibilite<8; nbPosibilite++) {
+              let coI:number = coordCheck[nbPosibilite][0]; // coordonnee i future a check
+              let coJ:number = coordCheck[nbPosibilite][1]; // coordonnee j future a check
+              tempTab = [];
+
+              while(this.verifCoord(coI,coJ) && this.board[coI][coJ] === adverse) {
+                  tempTab.push([coI,coJ]);
+
+                  coI += coordCheck[nbPosibilite][2];
+                  coJ += coordCheck[nbPosibilite][3];
+              }
+
+              if(this.verifCoord(coI,coJ) && this.board[coI][coJ] === player) {
+                  tempTab.map(elem => pionsManger.push(elem));
+              }
+          }
+
+          return pionsManger;
+      }
+  }
+
+  verifCoord(i:number, j:number): Boolean {
+    return i < 8 && i >= 0 && j < 8 && j >= 0;
   }
 
   /**
