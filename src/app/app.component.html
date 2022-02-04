@@ -5,17 +5,7 @@
                 <img class="logo" src="../assets/logo.svg">
             </div>
 
-            <div class="score-container">
-                <p class="scorestreak">Score </p>
-                <div class="left-element">
-                    <div class="pionAllie"><img width="80" height="80" class="pawn" src="../assets/white_piece.svg"></div>
-                    <p class="text-score">{{monScore}}</p>
-                </div>
-                <div class="right-element">
-                    <div class="pionAllie"><img width="80" height="80" class="pawn" src="../assets/dark_piece.svg"></div>
-                    <p class="text-score">{{ennemiScore}}</p>
-                </div>
-            </div>
+            <app-score [monScore]="monScore" [ennemiScore]="ennemiScore"> </app-score>
         </div>
 
         <div class="rules">
@@ -28,17 +18,7 @@
         </div>
     </div>
 
-    <div class="col-rigth">
-        <h1 class="autourde"> Au tour de : {{ this.RGS.turn }} </h1>
-        <table class="game-table">
-            <tr *ngFor="let row of RGS.board; let i = index">
-                <td *ngFor="let column of RGS.board; let j = index">
-                    <div class="pionAllie" *ngIf="RGS.board[i][j]==me"><img width="100" height="100" class="pawn" src="../assets/white_piece.svg"></div>
-                    <div class="pionEnnemi" *ngIf="RGS.board[i][j]==ennemi"><img width="100" height="100" class="pawn" src="../assets/dark_piece.svg"></div>
-                    <div class="pionPrediction" *ngIf="checkIfIsWherePositionICanPlay(i,j) && this.RGS.turn === me " (click)="onPredictionClick(i,j)"></div>
-                </td>
-            </tr>
-        </table>
-    </div>
+
+    <app-plateau [board]="RGS.board" [turn]="RGS.turn" [playable]="isPlayable()" (play)="RGS.play($event[0], $event[1])"> </app-plateau>
 </div>
 

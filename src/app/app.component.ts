@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IaService } from './ia.service';
 import { ReversiGameEngineService } from './reversi-game-engine.service';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 
 @Component({
@@ -11,9 +11,6 @@ import { Observable } from 'rxjs';
 })
 
 export class AppComponent {
-
-  public ennemi = "Player2";
-  public me = "Player1";
   public monScore = 2;
   public ennemiScore = 2;
 
@@ -23,9 +20,6 @@ export class AppComponent {
         this.updateScore();
     });
   }
-
-
-
 
   /**
    * Retourne en booléen en fonction de si la case est jouable ou non
@@ -37,6 +31,7 @@ export class AppComponent {
     let isPossible = false;
     let coordonneePosibles = this.RGS.whereCanPlay();
     let count = 0;
+    
     while(count < coordonneePosibles.length && !isPossible){
       if(coordonneePosibles[count][0]==i && coordonneePosibles[count][1]==j){
         isPossible = true;
@@ -47,25 +42,34 @@ export class AppComponent {
     return isPossible;
   }
 
+  isPlayable(): boolean[][] {
+    let playableInput: boolean[][] = new Array<boolean[]>(this.RGS.board.length);
+    for(let i = 0; i< this.RGS.board.length; i++){
+      playableInput[i] = new Array(this.RGS.board.length).fill(false);
+    }
+    
+    // On met true au endroit jouable
+    this.RGS.whereCanPlay().forEach(([x,y]) => {
+      playableInput[x][y] = true;
+      console.log(x+" "+y);
+    });
 
-  onPredictionClick(i: number, j:number){
-    console.log("Prediction clicked.");
-    this.RGS.play(i,j);
+    console.log(playableInput);
+    return playableInput;
   }
 
-
   updateScore(): void {
-      this.monScore = 0;
-      this.ennemiScore = 0;
+    this.monScore = 0;
+    this.ennemiScore = 0;
 
-      for(let i=0; i<this.RGS.board.length; i++){
-          for(let j=0; j<this.RGS.board.length; j++) {
-              if(this.RGS.board[i][j] === this.me){
-                this.monScore++;
-              }else if(this.RGS.board[i][j] === "Player2"){
-                this.ennemiScore++;
-              }
-          }
+    for(let i=0; i<this.RGS.board.length; i++){
+      for(let j=0; j<this.RGS.board.length; j++) {
+        if(this.RGS.board[i][j] === "Player1"){
+          this.monScore++;
+        } else if(this.RGS.board[i][j] === "Player2"){
+          this.ennemiScore++;
+        }
       }
+    }
   }
 }
