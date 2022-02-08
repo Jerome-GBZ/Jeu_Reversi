@@ -1,7 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
 import { BehaviorSubject, Observable, OperatorFunction, share } from 'rxjs';
 import { Board, BoardtoString, Board_RO, C, charToTurn, GameState, getEmptyBoard, PlayImpact, ReversiModelInterface, TileCoords, Turn } from './ReversiDefinitions';
-import { AppComponent } from './app.component';
+import { AppComponent } from '../app.component';
 
 export function runInZone<T>(zone: NgZone): OperatorFunction<T, T> {
   return (source) => {

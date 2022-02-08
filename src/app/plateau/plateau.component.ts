@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
-import { Board_RO, getEmptyBoard, Turn } from '../ReversiDefinitions';
+import { Board_RO, getEmptyBoard, Turn } from '../reversi-game-engine/ReversiDefinitions';
 
 @Component({
   selector: 'app-plateau',

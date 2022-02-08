@@ -1,0 +1,18 @@
+<mat-dialog-content align="center">
+    <h3> {{ message }} </h3>
+</mat-dialog-content>
+
+<mat-dialog-content align="center">
+  <p> {{ messageWinner }} </p>
+</mat-dialog-content>
+  
+<mat-dialog-actions align="center">
+    <button mat-raised-button mat-dialog-close tabindex="-1">
+      {{ cancelButtonText }}
+    </button>
+  
+    <button mat-raised-button color="primary" (click)="onYesClick()" tabindex="1">
+      {{ validButtonText }}
+    </button>
+</mat-dialog-actions>
+  
