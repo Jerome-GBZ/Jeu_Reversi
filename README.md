@@ -6,4 +6,4 @@ Projet de L3 Miage, développé avec le framework Angular.
  - npm i rxjs
 
 ## Lancer le projet :
-nmp start
+ - nmp start
